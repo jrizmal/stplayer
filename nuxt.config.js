@@ -65,7 +65,7 @@ export default {
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        baseURL: "http://localhost:8000/api",
+        baseURL: "http://localhost/predvajalnik/index.php",
     },
     toast: {
         position: 'bottom-right',

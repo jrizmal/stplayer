@@ -99,12 +99,17 @@ export default Vue.extend({
             password: this.password
           };
           this.$axios
-            .post("auth/register/", data)
+            .post("auth/registracija/", data)
             .then((res: any) => {
+              (this as any).$toast.success("Registracija uspešna.");
               console.log(res.data);
             })
             .catch((err: any) => {
-              (this as any).$toast.error("Napaka pri registraciji");
+              if (err.response != null) {
+                (this as any).$toast.error(err.response.data.message);
+              } else {
+                (this as any).$toast.error("Napaka pri registraciji.");
+              }
             });
         }
       } else {
