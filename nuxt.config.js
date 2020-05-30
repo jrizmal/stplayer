@@ -49,15 +49,21 @@ export default {
         strategies: {
             local: {
                 endpoints: {
-                    login: { url: '/auth/login', method: 'post', propertyName: 'token' },
+                    login: { url: '/auth/prijava', method: 'post', propertyName: 'token' },
                     logout: { url: '/auth/logout', method: 'post' },
-                    user: { url: '/auth/user', method: 'get', propertyName: 'user' }
+                    user: { url: '/auth/profil', method: 'get', propertyName: 'user' },
                 },
                 // tokenRequired: true,
                 // tokenType: 'bearer',
                 // globalToken: true,
                 // autoFetchUser: true
             }
+        },
+        redirect: {
+            login: '/login',
+            logout: '/',
+            callback: '/login',
+            home: '/'
         }
     },
     /*

@@ -26,10 +26,10 @@
           <b-nav-item-dropdown v-if="$auth.loggedIn" right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
-              <em>User</em>
+              <em>{{ $auth.user.name }}</em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item to="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item @click="signOut">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-button v-else to="/login" size="sm" class="my-2 my-sm-0 ml-2" variant="success">Prijava</b-button>
         </b-navbar-nav>
@@ -52,6 +52,9 @@ export default Vue.extend({
     searchLists(): void {
       // TODO: Search list and redirect to search results page
       console.log(this.listSearchQuery);
+    },
+    signOut(){
+      (this as any).$auth.logout()
     }
   }
 });

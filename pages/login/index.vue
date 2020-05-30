@@ -2,7 +2,7 @@
   <b-container>
     <b-row class="my-3">
       <b-col sm="2">
-        <h2>Prijava</h2>
+        <h2><b>Prijava</b></h2>
       </b-col>
       <b-col sm="6">
         <b-form>
@@ -80,9 +80,12 @@ export default Vue.extend({
             password: this.password
           }
         })
-        .then((res: any) => {})
+        .then((res: any) => {
+          (this as any).$toast.success('Pozdravljeni nazaj!')
+          // this.$router.replace("/")
+        })
         .catch((err: any) => {
-          console.log(err);
+          (this as any).$toast.error('Napaka pri prijavi.')
         });
     }
   }

@@ -2,7 +2,7 @@
   <b-container>
     <b-row class="my-3">
       <b-col sm="2">
-        <h2>Ustvari nov račun</h2>
+        <h2><b>Ustvari nov račun</b></h2>
       </b-col>
       <b-col sm="6">
         <b-form>
