@@ -1,14 +1,13 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="light">
-      <b-navbar-brand to="/">ST Predvajalnik</b-navbar-brand>
+      <b-navbar-brand to="/">ST Player</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="#">Vsi seznami predvajanja</b-nav-item>
-          <b-nav-item href="#">Lestvica najboljših</b-nav-item>
+          <b-nav-item to="/chart">Lestvica najboljših</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -50,8 +49,8 @@ export default Vue.extend({
   },
   methods: {
     searchLists(): void {
-      // TODO: Search list and redirect to search results page
-      console.log(this.listSearchQuery);
+      this.$router.push(`/search/${this.listSearchQuery}`)
+      this.listSearchQuery=""
     },
     signOut(){
       (this as any).$auth.logout()
