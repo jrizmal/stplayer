@@ -7,8 +7,7 @@
         </h2>
       </b-col>
     </b-row>
-    <playlist-display v-for="(p,index) in playlists" :key="index" :playlist="p"></playlist-display>
-    
+    <playlist-display :showControls="$auth.loggedIn" v-for="(p,index) in playlists" :key="index" :playlist="p" @refresh="refresh"></playlist-display>
   </b-container>
 </template>
 
@@ -18,16 +17,20 @@ import Vue from "vue";
 export default Vue.extend({
   data: function() {
     return {
-        playlists: [],
+      playlists: []
     };
   },
-  methods: {},
+  methods: {
+    refresh() {
+      this.$axios.get("lestvica/").then(res => {
+        this.playlists = res.data;
+      });
+    }
+  },
   watch: {},
   computed: {},
   mounted() {
-    this.$axios.get("lestvica/").then(res => {
-      this.playlists = res.data;
-    });
+    this.refresh();
   }
 });
 </script>

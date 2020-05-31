@@ -44,7 +44,7 @@ export default Vue.extend({
         }
       );
       this.$axios.post("seznam/nov", data).then(res=>{
-        console.log(res.data);
+        this.$router.back();
         
       })
     }

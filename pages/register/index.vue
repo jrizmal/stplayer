@@ -2,10 +2,22 @@
   <b-container>
     <b-row class="my-3">
       <b-col sm="2">
-        <h2><b>Ustvari nov račun</b></h2>
+        <h2>
+          <b>Ustvari nov račun</b>
+        </h2>
       </b-col>
       <b-col sm="6">
         <b-form>
+          <b-form-group
+            id="fieldset-0"
+            label="Vaše ime"
+            label-for="input-0"
+            :invalid-feedback="feedback.name.invalid"
+            :valid-feedback="feedback.name.valid"
+            :state="fieldState.name"
+          >
+            <b-form-input id="input-0" v-model="name" :state="fieldState.name" trim></b-form-input>
+          </b-form-group>
           <b-form-group
             id="fieldset-1"
             label="Vaš email naslov"
@@ -73,13 +85,19 @@ export default Vue.extend({
         password2: {
           valid: "",
           invalid: "Gesli se ne ujemata."
+        },
+        name: {
+          valid: "",
+          invalid: "",
         }
       },
       fieldState: {
         email: null,
         password: null,
-        password2: null
+        password2: null,
+        name: null,
       },
+      name: null,
       email: null,
       password: null,
       password2: null
@@ -102,7 +120,12 @@ export default Vue.extend({
             .post("auth/registracija/", data)
             .then((res: any) => {
               (this as any).$toast.success("Registracija uspešna.");
-              console.log(res.data);
+              (this as any).$auth.loginWith("local", {
+                data: {
+                  email: data.email,
+                  password: data.password
+                }
+              });
             })
             .catch((err: any) => {
               if (err.response != null) {

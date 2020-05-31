@@ -16,10 +16,20 @@
         </b-col>
         <b-col>
           <!-- Če je playlist naš, prikaži gumb za dodajanje komada -->
-          <b-button v-if="myPlaylist" variant="info">Dodaj komad</b-button>
+          <b-button
+            v-if="myPlaylist"
+            variant="info"
+            :to="'/playlist/'+playlist.id+'/add'"
+          >Dodaj komad</b-button>
         </b-col>
       </b-row>
-      <song-display v-for="(s,index) in songs" :key="index" :song="s"></song-display>
+      <song-display
+        v-for="(s,index) in songs"
+        :key="index"
+        :song="s"
+        :showDelete="myPlaylist"
+        @deleted="refreshSongs"
+      ></song-display>
     </div>
   </b-container>
 </template>
@@ -39,15 +49,19 @@ export default Vue.extend({
   },
   computed: {
     myPlaylist() {
-      return (this as any).playlist.user == (this as any).$auth.user.id;
+      return parseInt((this as any).playlist.user) == parseInt((this as any).$auth.user.id);
     }
   },
-  methods: {},
+  methods: {
+    refreshSongs() {
+      this.$axios.get(`seznam?id=${this.$route.params.id}`).then(res => {
+        this.playlist = res.data.playlist;
+        this.songs = res.data.songs;
+      });
+    }
+  },
   mounted() {
-    this.$axios.get(`seznam?id=${this.$route.params.id}`).then(res => {
-      this.playlist = res.data.playlist;
-      this.songs = res.data.songs;
-    });
+    this.refreshSongs();
   }
 });
 </script>

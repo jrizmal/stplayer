@@ -1,35 +1,50 @@
 <template>
   <b-row class="mb-3">
-    <b-col>
-      <youtube-media player-width="300" player-height="169" :video-id="videoId"></youtube-media>
-    </b-col>
-    <!-- <b-col cols="auto">
-        <b-img width="250" src="@/assets/image/playlist_placeholder.png"></b-img>
+    <b-col cols="auto">
+      <youtube-media player-width="480" player-height="320" :video-id="videoId"></youtube-media>
     </b-col>
     <b-col>
-      <h4>{{ playlist.title }}</h4>
-      <p>{{ "Avtor. not implemented" }}</p>
-      <p>{{ playlist.date }}</p>
-      <h2 :class="{ negative: playlist.rating<0, positive: playlist.rating>0 }">{{ playlist.rating }}</h2>
-    </b-col>-->
+      <b-button v-if="showDelete" @click="deleteSong" variant="warning">Izbriši</b-button>
+    </b-col>
   </b-row>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import { getIdFromURL } from "vue-youtube-embed";
-export default {
+export default Vue.extend({
   props: {
     song: {
       type: Object,
       default: null
+    },
+    showDelete: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     videoId() {
       return getIdFromURL(this.song.url);
     }
-  }
-};
+  },
+  methods: {
+    deleteSong() {
+      const data = Object.assign(
+        {},
+        {
+          id: parseInt((this as any).song.id)
+        }
+      );
+      // send delete request to server
+      this.$axios.delete("komad/izbrisi", { data: data }).then((res: any) => {
+        // then notify parent to refresh playlist
+        this.$emit("deleted");
+      });
+    }
+  },
+  mounted() {}
+});
 </script>
 
 <style>
