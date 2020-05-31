@@ -10,7 +10,7 @@
     </b-col>
     <b-col>
       <h4 @click="showDetails" class="cursor-pointer">{{ playlist.title }}</h4>
-      <p>{{ "Avtor. not implemented" }}</p>
+      <p><nuxt-link :to="'/user/'+playlist.user">{{ playlist.user_name }}</nuxt-link></p>
       <p>{{ playlist.date }}</p>
 
       <h2 v-if="showControls" :class="{ negative: playlist.rating<0, positive: playlist.rating>0 }">
@@ -59,8 +59,10 @@ export default {
           playlist: this.playlist.id
         })
         .then(res => {
-          console.log(res);
-        });
+          this.$toast.success("Playlist uspešno dodan v knjižnico.")
+        }).catch(err=>{
+          this.$toast.info("Playlist je že v vaši knjižnici.")
+        })
     },
     determineVote() {}
   },

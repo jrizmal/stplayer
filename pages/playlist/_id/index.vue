@@ -4,7 +4,7 @@
       <b-row class="mt-3 mb-5">
         <b-col cols="auto">
           <h2>
-            <b>{{ playlist.title }}</b>
+            <b>{{ playlist.title }}</b><b-button v-if="!myPlaylist" @click="addToLibrary" class="ml-3">Dodaj v knjižnico</b-button>
           </h2>
           <!-- Če je playlist naš -->
           <p>
@@ -58,6 +58,17 @@ export default Vue.extend({
         this.playlist = res.data.playlist;
         this.songs = res.data.songs;
       });
+    },
+    addToLibrary(){
+      this.$axios
+        .post("seznam/v-zbirko", {
+          playlist: (this as any).playlist.id
+        })
+        .then(res => {
+          (this as any).$toast.success("Playlist uspešno dodan v knjižnico.")
+        }).catch(err=>{
+          (this as any).$toast.info("Playlist je že v vaši knjižnici.")
+        })
     }
   },
   mounted() {

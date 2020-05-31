@@ -36,6 +36,14 @@ export default Vue.extend({
   },
   methods: {
     addPlaylist() {
+      if(this.title===""){
+        this.showErrorToast("Naslov ne sme biti prazen!")
+        return
+      }
+      if(this.links==""){
+        this.showErrorToast("Naslov ne sme biti prazen!")
+        return
+      }
       const data = Object.assign(
         {},
         {
@@ -47,6 +55,9 @@ export default Vue.extend({
         this.$router.back();
         
       })
+    },
+    showErrorToast(err:String){
+      (this as any).$toast.info(err)
     }
   },
   mounted() {}

@@ -8,6 +8,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item to="/chart">Lestvica najboljših</b-nav-item>
+          <b-nav-item to="/about">O strani</b-nav-item>
         </b-navbar-nav>
         <b-button v-if="$auth.loggedIn" to="/playlist/add" size="sm" class="my-2 my-sm-0 ml-lg-2" variant="success">Nov seznam</b-button>
 
@@ -28,8 +29,8 @@
             <template v-slot:button-content>
               <em>{{ $auth.user.name }}</em>
             </template>
-            <b-dropdown-item to="/profile">Profile</b-dropdown-item>
-            <b-dropdown-item @click="signOut">Sign Out</b-dropdown-item>
+            <b-dropdown-item to="/profile">Profil</b-dropdown-item>
+            <b-dropdown-item @click="signOut">Odjava</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-button v-else to="/login" size="sm" class="my-2 my-sm-0 ml-2" variant="success">Prijava</b-button>
         </b-navbar-nav>
